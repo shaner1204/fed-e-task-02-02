@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES Module - 模块的特性</title>
+</head>
+<body>
+    <!-- 通过给 script 添加 type = module 的属性，就可以以 ES Module 的标准执行其中的 JS 代码了 -->
+    <script type="module">
+        console.log('this is es module')
+    </script>
+
+    <!-- 1. ESM 自动采用严格械，忽略 ‘use strict’ -->
+    <!-- 严格模式下，不能在全局范围直接使用 this -->
+    <!-- 非严格模式下，this 指向全局对象 —— window (不加type="module")-->
+    <script type="module">
+        // 添加 type="module" this 打印为 undeifned
+        console.log(this)
+    </script>
+
+    <!-- 2.每个 ES Module 都是运行在单独的私有作用域中 -->
+    <script type="module">
+        var foo = 100
+        console.log(foo)
+    </script>
+    <script type="module">
+        console.log(foo)
+    </script>
+
+    <!-- 3.ESM 是通过 CORS 的方式请求外部 JS 模块的 -->
+    <!-- 如果 JS 模块不在同源地址下，需要请求的服务端地址，在响应的响应头中必须中提供的 CORS 标头 -->
+    <!-- CORS 不支持文件形式去访问，所以必须通过 http server 的形式让页面工作起来 -->
+    <!-- <script type="module" src="https://libs/baidu.com/jquery/2.0.0/jquery.min.js">
+
+    </script> -->
+
+    
+    <!-- 网页的加载过程，默认对script 标签采用立即执行的机制，页面的渲染会等待脚本的执行完成，才会继续往下渲染 -->
+    <!-- <script src="demo.js"></script>
+    <p>需要显示的内容</p> -->
+
+    <!-- 4. ESM script 标签会延迟执行脚本 相当于 defer 属性——也就是网页渲染完成之后，再去执行脚本，不会阻碍页面中元素的显示 -->
+    <script type="module" src="demo.js"></script>
+    <p>需要显示的内容</p>
+</body>
+</html>
